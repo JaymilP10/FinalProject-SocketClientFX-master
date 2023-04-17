@@ -133,8 +133,7 @@ public class FXMLDocumentController implements Initializable {
                     }
                     waitForDisconnect();
                     try {
-                        Thread.sleep(Integer.valueOf(
-                                retryIntervalTextField.getText()) * 1000);
+                        Thread.sleep(Integer.valueOf(retryIntervalTextField.getText()) * 1000);
                     } catch (InterruptedException ex) {
                     }
                 }
