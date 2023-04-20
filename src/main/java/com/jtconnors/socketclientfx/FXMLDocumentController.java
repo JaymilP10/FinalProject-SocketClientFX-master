@@ -38,9 +38,9 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TextField sendTextField;
     @FXML
-    private TextField selectedTextField;
+    private TextField selectedTextField, txtName;
     @FXML
-    private Button connectButton;
+    private Button connectButton, btnFindMatch, btnEnterName;
     @FXML
     private Button disconnectButton;
     @FXML
@@ -52,7 +52,11 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TextField retryIntervalTextField;
     @FXML
-    private Label connectedLabel;
+    private Label connectedLabel, lblPickLoadout;
+    @FXML
+    private ListView lstPrimaryWeapon, lstSecondaryWeapon, lstItems;
+
+    private String playerName;
 
     private final static Logger LOGGER
             = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
@@ -67,6 +71,11 @@ public class FXMLDocumentController implements Initializable {
     private volatile boolean isAutoConnected;
 
     private static final int DEFAULT_RETRY_INTERVAL = 2000; // in milliseconds
+
+    public void enterName() {
+        playerName = txtName.getText();
+        btnFindMatch.setDisable(false);
+    }
 
     public enum ConnectionDisplayState {
 
@@ -164,75 +173,6 @@ public class FXMLDocumentController implements Initializable {
 //                sendButton.setDisable(false);
 //                sendTextField.setDisable(false);
                 connectedLabel.setText("Connected");
-
-                for (int i = 0; i < map.length; i++) {
-                    for (int j = 0; j < map[0].length; j++) {
-                        map[i][j] = new Button();
-//                        map[i][j].setPrefSize(10, 10);
-                        map[i][j].setPrefHeight(20);
-                        map[i][j].setPrefWidth(20);
-//                map[i][j] = new ImageView();
-//                map[i][j].setEffect(c);
-//                map[i][j].setFitHeight(70);
-//                map[i][j].setFitWidth(70);
-
-                        if (i > 89 && j < 10){
-                            map[i][j].setStyle("-fx-background-color: blue");
-                        } else if (i < 10 && j > 89){
-                            map[i][j].setStyle("-fx-background-color: red");
-                        } else if ((i < 10 && j >= 10 && j <= 89) || (j < 10 && i <= 89) || (i > 89 && j >= 10 && j <= 89) || (j > 89 && i >= 10)){
-                            map[i][j].setStyle("-fx-background-color: yellow");
-                        } else {
-                            map[i][j].setStyle("-fx-background-color: green");
-                        }
-
-//                        if (i == 0 || j == 0 || i == 29 || j == 49){
-//                            map[i][j].setStyle("-fx-background-color: black");
-//                        }
-//                        if (j < 7)
-//                            map[i][j].setStyle("-fx-background-color: blue");
-//                        else if (j > 42) {
-//                            map[i][j].setStyle("-fx-background-color: red");
-//                        }
-//                        if (j >= 7 && i < 10 && j <= 42){
-//                            map[i][j].setStyle("-fx-background-color: yellow");
-//                        } else if (j >= 7 && j <= 42 && i > 20){
-//                            map[i][j].setStyle("-fx-background-color: yellow");
-//                        } else if (j >= 7 && j <= 42 && i <= 20 && i >= 10) {
-//                            map[i][j].setStyle("-fx-background-color: green");
-//                        }
-                        MAP.add(map[i][j], j, i);
-                    }
-                }
-
-                int x = 10;
-                for (int i = 10; i <= 89; i++) {
-
-                    for (int k = 0; k <= 7; k++) {
-                        map[i + k][x].setStyle("-fx-background-color: blue");
-                        map[i][x + k].setStyle("-fx-background-color: blue");
-                    }
-                    x++;
-                }
-
-                int j = 10;
-                for (int i = 89; i >= 10; i--) {
-                    for (int k = 0; k <= 7; k++) {
-                        map[i + k][j].setStyle("-fx-background-color: yellow");
-                        map[i - k][j].setStyle("-fx-background-color: yellow");
-                    }
-//                    map[i][j].setStyle("-fx-background-color: yellow");
-//                    map[i-1][j].setStyle("-fx-background-color: yellow");
-//                    map[i-2][j].setStyle("-fx-background-color: yellow");
-//                    map[i-3][j].setStyle("-fx-background-color: yellow");
-//                    map[i-4][j].setStyle("-fx-background-color: yellow");
-//                    map[i+1][j].setStyle("-fx-background-color: yellow");
-//                    map[i+2][j].setStyle("-fx-background-color: yellow");
-//                    map[i+3][j].setStyle("-fx-background-color: yellow");
-//                    map[i+4][j].setStyle("-fx-background-color: yellow");
-                    j++;
-                }
-
                 break;
             case AUTOCONNECTED:
                 connectButton.setDisable(true);
@@ -305,6 +245,45 @@ public class FXMLDocumentController implements Initializable {
         });
 
         Runtime.getRuntime().addShutdownHook(new ShutDownThread());
+
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                map[i][j] = new Button();
+//                        map[i][j].setPrefSize(10, 10);
+                map[i][j].setPrefHeight(20);
+                map[i][j].setPrefWidth(20);
+
+                if (i > 89 && j < 10){
+                    intMap[i][j] = 1;
+                } else if (i < 10 && j > 89){
+                    intMap[i][j] = 2;
+                } else if ((i < 10 && j >= 10 && j <= 89) || (j < 10 && i <= 89) || (i > 89 && j >= 10 && j <= 89) || (j > 89 && i >= 10)){
+                    intMap[i][j] = 3;
+                } else {
+                    intMap[i][j] = 4;
+                }
+                MAP.add(map[i][j], j, i);
+            }
+        }
+
+        int x = 10;
+        for (int i = 10; i <= 89; i++) {
+            for (int k = 0; k <= 7; k++) {
+                intMap[i + k][x] = 1;
+                intMap[i][x + k] = 1;
+            }
+            x++;
+        }
+
+        int j = 10;
+        for (int i = 89; i >= 10; i--) {
+            for (int k = 0; k <= 7; k++) {
+                intMap[i + k][j] = 3;
+                intMap[i - k][j] = 3;
+            }
+            j++;
+        }
+
     }
 
     class ShutDownThread extends Thread {
@@ -326,6 +305,9 @@ public class FXMLDocumentController implements Initializable {
         public void onMessage(String line) {
             if (line != null && !line.equals("")) {
                 rcvdMsgsData.add(line);
+            }
+            if (line.equals("Update Screen")){
+                updateScreen();
             }
         }
 
@@ -414,11 +396,26 @@ public class FXMLDocumentController implements Initializable {
 
     Button[][] map = new Button[100][100];
 
+    int[][] intMap = new int[100][100];
+
     @FXML
     private GridPane MAP;
 
-    @FXML
-    private void initialize(){
-
+    private void updateScreen(){
+        for (int i = 0; i < intMap.length; i++) {
+            for (int j = 0; j < intMap[0].length; j++) {
+                if (intMap[i][j] == 1){
+                    map[i][j].setStyle("-fx-background-color: blue");
+                } else if (intMap[i][j] == 2){
+                    map[i][j].setStyle("-fx-background-color: red");
+                } else if (intMap[i][j] == 3){
+                    map[i][j].setStyle("-fx-background-color: yellow");
+                } else if (intMap[i][j] == 4){
+                    map[i][j].setStyle("-fx-background-color: green");
+                } else if (intMap[i][j] == 5){
+                    map[i][j].setStyle("-fx-background-color: black");
+                }
+            }
+        }
     }
 }
