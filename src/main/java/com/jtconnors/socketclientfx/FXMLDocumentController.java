@@ -6,10 +6,13 @@ import java.lang.invoke.MethodHandles;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
+
+import javafx.animation.AnimationTimer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -20,6 +23,7 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import com.jtconnors.socketfx.FxSocketClient;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -304,7 +308,7 @@ public class FXMLDocumentController implements Initializable {
         @Override
         public void onMessage(String line) {
             if (line != null && !line.equals("")) {
-                rcvdMsgsData.add(line);
+//                rcvdMsgsData.add(line);
             }
             if (line.equals("Update Screen")){
                 updateScreen();
@@ -397,6 +401,34 @@ public class FXMLDocumentController implements Initializable {
     Button[][] map = new Button[100][100];
 
     int[][] intMap = new int[100][100];
+
+    private double startTime;
+    private void inGame(ActionEvent event){
+        EventHandler<MouseEvent> z = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                //all button code goes here
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 4; j++) {
+                        if (((Button) event.getSource()) == map[i][j]){
+//                            System.out.println("oc:"+i+"or:"+j);
+                            startTime = System.nanoTime();
+                            new AnimationTimer(){
+                                @Override
+                                public void handle(long now) {
+                                    if(startTime>0){
+                                        if (now - startTime > (900000000.0 * 2)){
+                                            this.stop();
+                                        }
+                                    }
+                                }
+                            }.start();
+                        }
+                    }
+                }
+            }
+        };
+    }
 
     @FXML
     private GridPane MAP;
