@@ -4,6 +4,7 @@ import com.jtconnors.socket.DebugFlags;
 import com.jtconnors.socket.SocketListener;
 import java.lang.invoke.MethodHandles;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
 
@@ -15,13 +16,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import com.jtconnors.socketfx.FxSocketClient;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -44,7 +39,7 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TextField selectedTextField, txtName;
     @FXML
-    private Button connectButton, btnFindMatch, btnEnterName;
+    private Button connectButton, btnFindMatch, btnEnterName, btnReady;
     @FXML
     private Button disconnectButton;
     @FXML
@@ -59,6 +54,9 @@ public class FXMLDocumentController implements Initializable {
     private Label connectedLabel, lblPickLoadout;
     @FXML
     private ListView lstPrimaryWeapon, lstSecondaryWeapon, lstItems;
+
+    @FXML
+    private ScrollPane scrollPane;
 
     private String playerName;
 
@@ -75,11 +73,6 @@ public class FXMLDocumentController implements Initializable {
     private volatile boolean isAutoConnected;
 
     private static final int DEFAULT_RETRY_INTERVAL = 2000; // in milliseconds
-
-    public void enterName() {
-        playerName = txtName.getText();
-        btnFindMatch.setDisable(false);
-    }
 
     public enum ConnectionDisplayState {
 
@@ -250,44 +243,129 @@ public class FXMLDocumentController implements Initializable {
 
         Runtime.getRuntime().addShutdownHook(new ShutDownThread());
 
-        for (int i = 0; i < map.length; i++) {
-            for (int j = 0; j < map[0].length; j++) {
-                map[i][j] = new Button();
-//                        map[i][j].setPrefSize(10, 10);
-                map[i][j].setPrefHeight(20);
-                map[i][j].setPrefWidth(20);
+        for (int i = 0; i < buttons.length; i++) {
+            for (int j = 0; j < buttons[0].length; j++) {
+                buttons[i][j] = new Button();
+//                        buttons[i][j].setPrefSize(10, 10);
+                buttons[i][j].setPrefHeight(20);
+                buttons[i][j].setPrefWidth(20);
 
-                if (i > 89 && j < 10){
-                    intMap[i][j] = 1;
-                } else if (i < 10 && j > 89){
-                    intMap[i][j] = 2;
-                } else if ((i < 10 && j >= 10 && j <= 89) || (j < 10 && i <= 89) || (i > 89 && j >= 10 && j <= 89) || (j > 89 && i >= 10)){
-                    intMap[i][j] = 3;
-                } else {
-                    intMap[i][j] = 4;
+                map[i][j] = new Map(i, j, 4, false);
+
+                if (i > 20 && i < 30 && j < 10){
+                    map[i][j].num = 1;
+                } else if (i > 20 && i < 30 && j > 89){
+                    map[i][j].num = 2;
+                } else if ((i < 10 && j >= 20 && j <= 79) || (i > 39 && j >= 20 && j <= 79)){
+                    map[i][j].num = 3;
                 }
-                MAP.add(map[i][j], j, i);
+                MAP.add(buttons[i][j], j, i);
+            }
+        }
+
+        for (int i = 10; i <= 39; i++) {
+            for (int j = 45; j < 55; j++) {
+                map[i][j].num = 1;
             }
         }
 
         int x = 10;
-        for (int i = 10; i <= 89; i++) {
-            for (int k = 0; k <= 7; k++) {
-                intMap[i + k][x] = 1;
-                intMap[i][x + k] = 1;
+        for (int i = 30; i <= 39; i++) {
+            for (int k = 0; k <= 9; k++) {
+//                map[i + k][j] = new Map(i + k, j, 3, false);
+//                map[i - k][j] = new Map(i - k, j, 3, false);
+                map[i + k][x].num = 3;
+                map[i - k][x].num = 3;
+                map[i][x + k].num = 3;
+                map[i][x - k].num = 3;
+//                map[i + k][j].isWall = false;
+//                map[i - k][j].isWall = false;
             }
             x++;
         }
 
-        int j = 10;
-        for (int i = 89; i >= 10; i--) {
-            for (int k = 0; k <= 7; k++) {
-                intMap[i + k][j] = 3;
-                intMap[i - k][j] = 3;
+        int j = 89;
+        for (int i = 20; i >= 10; i--) {
+            for (int k = 0; k <= 9; k++) {
+//                map[i + k][j] = new Map(i + k, j, 3, false);
+//                map[i - k][j] = new Map(i - k, j, 3, false);
+                map[i + k][j].num = 3;
+                map[i - k][j].num = 3;
+                map[i][j + k].num = 3;
+                map[i][j - k].num = 3;
+//                map[i + k][j].isWall = false;
+//                map[i - k][j].isWall = false;
             }
-            j++;
+            j--;
         }
 
+        int y = 89;
+        for (int i = 30; i <= 39; i++) {
+            for (int k = 0; k <= 9; k++) {
+//                map[i + k][j] = new Map(i + k, j, 3, false);
+//                map[i - k][j] = new Map(i - k, j, 3, false);
+                map[i + k][y].num = 3;
+                map[i - k][y].num = 3;
+                map[i][y + k].num = 3;
+                map[i][y - k].num = 3;
+//                map[i + k][j].isWall = false;
+//                map[i - k][j].isWall = false;
+            }
+            y--;
+        }
+
+        int z = 10;
+        for (int i = 20; i >= 10; i--) {
+            for (int k = 0; k <= 9; k++) {
+//                map[i + k][j] = new Map(i + k, j, 3, false);
+//                map[i - k][j] = new Map(i - k, j, 3, false);
+                map[i + k][z].num = 3;
+                map[i - k][z].num = 3;
+                map[i][z + k].num = 3;
+                map[i][z - k].num = 3;
+//                map[i + k][j].isWall = false;
+//                map[i - k][j].isWall = false;
+            }
+            z++;
+        }
+        Weapon LMG = new Weapon("LMG", "MachineGun", 25, 10, 100, .1);
+        Weapon RPG = new Weapon("RPG", "Rocket Launcher", 100, 400, 5, .25);
+        Weapon AR = new Weapon("AR", "Assault Rifle", 40, 50, 30, .25);
+        Weapon Sniper = new Weapon("Sniper", "Sniper", 100, 200, 10, .25);
+        weapons.add(LMG);
+        weapons.add(RPG);
+        weapons.add(AR);
+        weapons.add(Sniper);
+        lstPrimaryWeapon.getItems().add(LMG.weaponName);
+        lstPrimaryWeapon.getItems().add(AR.weaponName);
+        lstSecondaryWeapon.getItems().add(RPG.weaponName);
+        lstSecondaryWeapon.getItems().add(Sniper.weaponName);
+    }
+
+    ArrayList<Weapon> weapons = new ArrayList<>();
+    Weapon primaryWeapon = new Weapon();
+    Weapon secondaryWeapon = new Weapon();
+    int numPlayersReady = 0;
+
+    @FXML
+    private void pickLoadout(ActionEvent event){
+        String primaryWeaponName = lstPrimaryWeapon.getSelectionModel().getSelectedItem().toString();
+        String secondaryWeaponName = lstSecondaryWeapon.getSelectionModel().getSelectedItem().toString();
+        for (Weapon weapon : weapons) {
+            if (weapon.weaponName.equals(primaryWeaponName))
+                primaryWeapon = weapon;
+            else if (weapon.weaponName.equals(secondaryWeaponName))
+                secondaryWeapon = weapon;
+        }
+        btnReady.setDisable(true);
+        btnReady.setVisible(false);
+        socket.sendMessage("Ready");
+    }
+
+    public void enterName() {
+        playerName = txtName.getText();
+//        socket.sendMessage("Client1Name" + playerName);
+        btnFindMatch.setDisable(false);
     }
 
     class ShutDownThread extends Thread {
@@ -312,6 +390,32 @@ public class FXMLDocumentController implements Initializable {
             }
             if (line.equals("Update Screen")){
                 updateScreen();
+            } else if (line.startsWith("NumConnections")){
+                int numConnections = Integer.parseInt(line.substring(line.indexOf("s") + 1));
+                if (numConnections == 2){
+                    txtName.setVisible(true);
+                    btnFindMatch.setDisable(true);
+                    btnEnterName.setDisable(true);
+                    btnEnterName.setVisible(false);
+                    btnFindMatch.setVisible(false);
+                    lblPickLoadout.setVisible(true);
+                    lstPrimaryWeapon.setVisible(true);
+                    lstSecondaryWeapon.setVisible(true);
+                    lstItems.setVisible(true);
+                    scrollPane.setVisible(false);
+                    lblPickLoadout.setVisible(false);
+                    txtName.setVisible(false);
+                }
+            } else if (line.startsWith("Ready")){
+                numPlayersReady = Integer.parseInt(line.substring(line.indexOf("y") + 1));
+                if (numPlayersReady == 2){
+                    lstPrimaryWeapon.setVisible(false);
+                    lstSecondaryWeapon.setVisible(false);
+                    lstItems.setVisible(false);
+                    scrollPane.setVisible(true);
+                    lblPickLoadout.setVisible(false);
+                    txtName.setVisible(false);
+                }
             }
         }
 
@@ -398,10 +502,6 @@ public class FXMLDocumentController implements Initializable {
         }
     }
 
-    Button[][] map = new Button[100][100];
-
-    int[][] intMap = new int[100][100];
-
     private double startTime;
     private void inGame(ActionEvent event){
         EventHandler<MouseEvent> z = new EventHandler<MouseEvent>() {
@@ -410,7 +510,7 @@ public class FXMLDocumentController implements Initializable {
                 //all button code goes here
                 for (int i = 0; i < 5; i++) {
                     for (int j = 0; j < 4; j++) {
-                        if (((Button) event.getSource()) == map[i][j]){
+                        if (((Button) event.getSource()) == buttons[i][j]){
 //                            System.out.println("oc:"+i+"or:"+j);
                             startTime = System.nanoTime();
                             new AnimationTimer(){
@@ -430,22 +530,26 @@ public class FXMLDocumentController implements Initializable {
         };
     }
 
+    Button[][] buttons = new Button[100][100];
+
+    Map[][] map = new Map[100][100];
+
     @FXML
     private GridPane MAP;
 
     private void updateScreen(){
-        for (int i = 0; i < intMap.length; i++) {
-            for (int j = 0; j < intMap[0].length; j++) {
-                if (intMap[i][j] == 1){
-                    map[i][j].setStyle("-fx-background-color: blue");
-                } else if (intMap[i][j] == 2){
-                    map[i][j].setStyle("-fx-background-color: red");
-                } else if (intMap[i][j] == 3){
-                    map[i][j].setStyle("-fx-background-color: yellow");
-                } else if (intMap[i][j] == 4){
-                    map[i][j].setStyle("-fx-background-color: green");
-                } else if (intMap[i][j] == 5){
-                    map[i][j].setStyle("-fx-background-color: black");
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                if (map[i][j].num == 1){
+                    buttons[i][j].setStyle("-fx-background-color: blue");
+                } else if (map[i][j].num == 2){
+                    buttons[i][j].setStyle("-fx-background-color: red");
+                } else if (map[i][j].num == 3){
+                    buttons[i][j].setStyle("-fx-background-color: yellow");
+                } else if (map[i][j].num == 4){
+                    buttons[i][j].setStyle("-fx-background-color: green");
+                } else if (map[i][j].num == 5){
+                    buttons[i][j].setStyle("-fx-background-color: black");
                 }
             }
         }
