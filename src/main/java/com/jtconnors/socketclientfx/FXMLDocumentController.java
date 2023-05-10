@@ -497,11 +497,14 @@ public class FXMLDocumentController implements Initializable {
                     for (int i = 0; i < 26; i++) {
                         for (int j = 0; j < 26; j++) {
                             if (((Button) event.getSource()) == displayButtons[i][j]){
+
 //                                int rowTo = player.yLoc + (i - (player.yLoc + 13));
 //                                int colTo = player.xLoc + (j - (player.xLoc + 13));
 
                                 int rowTo = player.yLoc + (i - 13);
                                 int colTo = player.xLoc + (j - 13);
+
+                                socket.sendMessage("Player shot:" + playerName + "r:" + rowTo + "c:" + colTo);
 
 //                                int finalJ = j;
 //                                int finalI = i;
@@ -651,6 +654,7 @@ public class FXMLDocumentController implements Initializable {
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+            socket.sendMessage("Move Player Right:" + playerName);
             player.xLoc++;
         }
         else if (keyEvent.getCode().equals(KeyCode.A) && player.xLoc > 0 && player.xLoc - 1 > 1) {
@@ -658,6 +662,7 @@ public class FXMLDocumentController implements Initializable {
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+            socket.sendMessage("Move Player Left:" + playerName);
             System.out.println("rk");
             player.xLoc--;
         }
@@ -667,6 +672,7 @@ public class FXMLDocumentController implements Initializable {
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
             System.out.println("w");
+            socket.sendMessage("Move Player Upp:" + playerName);
             player.yLoc--;
         }
         else if (key == KeyCode.S && player.yLoc < 49) {
@@ -674,12 +680,14 @@ public class FXMLDocumentController implements Initializable {
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+            socket.sendMessage("Move Player Downn:" + playerName);
             player.yLoc++;
         } else if (key == KeyCode.Q && player.yLoc > 0 && player.xLoc > 0 && player.yLoc - 1 > 1 && player.xLoc - 1 > 1){
             map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+            socket.sendMessage("Move Player Up-left:" + playerName);
             player.yLoc--;
             player.xLoc--;
         } else if (key == KeyCode.E && player.yLoc > 0 && player.xLoc < 99 && player.yLoc - 1 > 1){
@@ -687,6 +695,7 @@ public class FXMLDocumentController implements Initializable {
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+            socket.sendMessage("Move Player Up-right:" + playerName);
             player.yLoc--;
             player.xLoc++;
         } else if (key == KeyCode.Z && player.yLoc < 99 && player.xLoc > 0 && player.xLoc - 1 > 1){
@@ -694,6 +703,7 @@ public class FXMLDocumentController implements Initializable {
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+            socket.sendMessage("Move Player Down-left:" + playerName);
             player.yLoc++;
             player.xLoc--;
         } else if (key == KeyCode.C && player.yLoc < 49 && player.xLoc < 99){
@@ -701,6 +711,7 @@ public class FXMLDocumentController implements Initializable {
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+            socket.sendMessage("Move Player Down-right:" + playerName);
             player.yLoc++;
             player.xLoc++;
         }
@@ -709,6 +720,118 @@ public class FXMLDocumentController implements Initializable {
         map[player.yLoc][player.xLoc - 1].newNum = 6;
         map[player.yLoc][player.xLoc].newNum = 6;
         updateScreen();
+    }
+
+    private double startTime;
+    private void inGame(ActionEvent event){
+        EventHandler<MouseEvent> z = new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                //all button code goes here
+                for (int i = 0; i < 5; i++) {
+                    for (int j = 0; j < 4; j++) {
+                        if (((Button) event.getSource()) == buttons[i][j]){
+//                            System.out.println("oc:"+i+"or:"+j);
+                            startTime = System.nanoTime();
+                            new AnimationTimer(){
+                                @Override
+                                public void handle(long now) {
+                                    if(startTime>0){
+                                        if (now - startTime > (900000000.0 * 2)){
+                                            this.stop();
+                                        }
+                                    }
+                                }
+                            }.start();
+                        }
+                    }
+                }
+            }
+        };
+    }
+
+    Button[][] buttons = new Button[50][100];
+
+    Button[][] displayButtons = new Button[26][26];
+
+    Map[][] map = new Map[50][100];
+
+    @FXML
+    private GridPane MAP;
+
+    private void updateScreen(){
+
+        for (Player player : players) {
+            System.out.println(player.name);
+            map[player.yLoc][player.xLoc].newNum = 6;
+            map[player.yLoc - 1][player.xLoc - 1].newNum = 6;
+            map[player.yLoc - 1][player.xLoc].newNum = 6;
+            map[player.yLoc][player.xLoc - 1].newNum = 6;
+        }
+
+        for (int i = 0; i < map.length; i++) {
+            for (int c = 0; c < map[0].length; c++) {
+                if (map[i][c].newNum == 1){
+                    buttons[i][c].setStyle("-fx-background-color: blue");
+                } else if (map[i][c].newNum == 2){
+                    buttons[i][c].setStyle("-fx-background-color: red");
+                } else if (map[i][c].newNum == 3){
+                    buttons[i][c].setStyle("-fx-background-color: yellow");
+                } else if (map[i][c].newNum == 4){
+                    buttons[i][c].setStyle("-fx-background-color: green");
+                } else if (map[i][c].newNum == 5){
+                    buttons[i][c].setStyle("-fx-background-color: black");
+                } else if (map[i][c].newNum == 6){
+                    buttons[i][c].setStyle("-fx-background-color: grey");
+                } else if (map[i][c].newNum == 7){
+                    buttons[i][c].setStyle("-fx-background-color: brown");
+                }
+            }
+        }
+
+        for (int i = 0; i < 13; i++) {
+            for (int k = 0; k < 13; k++) {
+                if (player.yLoc - (13 - i) > 0 && player.xLoc - (13 - k) > 0){
+                    displayButtons[i][k].setStyle(buttons[player.yLoc - (13 - i)][player.xLoc - (13 - k)].getStyle());
+                    displayButtons[i][k].setGraphic(buttons[player.yLoc - (13 - i)][player.xLoc - (13 - k)].getGraphic());
+                } else {
+                    displayButtons[i][k].setStyle("-fx-background-color: black");
+                }
+            }
+        }
+
+        for (int i = 0; i < 13; i++) {
+            for (int k = 0; k < 13; k++) {
+                if (player.yLoc - (13 - i) > 0 && player.xLoc + k < 99){
+                    displayButtons[i][k + 13].setStyle(buttons[player.yLoc - (13 - i)][player.xLoc + k].getStyle());
+                    displayButtons[i][k + 13].setGraphic(buttons[player.yLoc - (13 - i)][player.xLoc + k].getGraphic());
+                } else {
+                    displayButtons[i][k + 13].setStyle("-fx-background-color: black");
+                }
+            }
+        }
+
+        for (int i = 0; i < 13; i++) {
+            for (int k = 0; k < 13; k++) {
+                if (player.yLoc + i < 49 && player.xLoc + k < 99){
+                    displayButtons[i + 13][k + 13].setStyle(buttons[player.yLoc + i][player.xLoc + k].getStyle());
+                    displayButtons[i + 13][k + 13].setGraphic(buttons[player.yLoc + i][player.xLoc + k].getGraphic());
+                } else {
+                    displayButtons[i + 13][k + 13].setStyle("-fx-background-color: black");
+                }
+            }
+        }
+
+        for (int i = 0; i < 13; i++) {
+            for (int k = 0; k < 13; k++) {
+                if (player.yLoc + i < 49 && player.xLoc - (13 - k) > 0){
+                    displayButtons[i + 13][k].setStyle(buttons[player.yLoc + i][player.xLoc - (13 - k)].getStyle());
+                    displayButtons[i + 13][k].setGraphic(buttons[player.yLoc + i][player.xLoc - (13 - k)].getGraphic());
+                } else {
+                    displayButtons[i + 13][k].setStyle("-fx-background-color: black");
+                }
+            }
+        }
     }
 
     class ShutDownThread extends Thread {
@@ -758,11 +881,126 @@ public class FXMLDocumentController implements Initializable {
 //                    scrollPane.setVisible(true);
                     lblPickLoadout.setVisible(false);
                     txtName.setVisible(false);
+                    socket.sendMessage("Create Player:" + txtName.getText());
                     MAP.setVisible(true);
+                    start();
                 }
             } else if (line.startsWith("Create Player:")){
-//                players.add(new Player(line.substring(line.indexOf(":") + 1), 1, 250, 25, .5, primaryWeapon, secondaryWeapon, 5, 5));
+                players.add(new Player(line.substring(line.indexOf(":") + 1), 1, 250, 25, .5, 5, 23, map));
+            } else if (line.startsWith("Move Player Left:")){
+                for (Player player : players) {
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                        map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
+                        map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
+                        map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
+                        map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+                        player.xLoc--;
+                    }
+                }
+            } else if (line.startsWith("Move Player Right:")){
+                System.out.println("received player move right");
+                for (Player player : players) {
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                        map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
+                        map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
+                        map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
+                        map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+                        player.xLoc++;
+                    }
+                }
+            } else if (line.startsWith("Move Player Downn")){
+                for (Player player : players) {
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                        map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
+                        map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
+                        map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
+                        map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+                        player.yLoc++;
+                    }
+                }
+            } else if (line.startsWith("Move Player Upp")){
+                for (Player player : players) {
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                        map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
+                        map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
+                        map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
+                        map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+                        player.yLoc--;
+                    }
+                }
+            } else if (line.startsWith("Move Player Down-right")){
+                for (Player player : players) {
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                        map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
+                        map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
+                        map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
+                        map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+                        player.yLoc++;
+                        player.xLoc++;
+                    }
+                }
+            } else if (line.startsWith("Move Player Down-left")){
+                for (Player player : players) {
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                        map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
+                        map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
+                        map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
+                        map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+                        player.yLoc++;
+                        player.xLoc--;
+                    }
+                }
+            } else if (line.startsWith("Move Player Up-right")){
+                for (Player player : players) {
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                        map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
+                        map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
+                        map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
+                        map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+                        player.yLoc--;
+                        player.xLoc++;
+                    }
+                }
+            } else if (line.startsWith("Move Player Up-left")){
+                for (Player player : players) {
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                        map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
+                        map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
+                        map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
+                        map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
+                        player.yLoc--;
+                        player.xLoc--;
+                    }
+                }
+            } else if (line.startsWith("Player shot")){
+                int rowTo = Integer.parseInt(line.substring(line.indexOf("r:") + 2, line.indexOf("c")));
+                int colTo = Integer.parseInt(line.substring(line.indexOf("c:") + 2));
+                String playerName = line.substring(line.indexOf("shot:") + 5, line.indexOf("r:"));
+
+                for (Player player : players) {
+                    if (player.name.equals(playerName)){
+                        Bullets bullet = new Bullets(player.xLoc, player.yLoc);
+                        new AnimationTimer(){
+                            @Override
+                            public void handle(long now) {
+//                                        System.out.println("in animation timer");
+                                if (currentlyUsingWeapon.startTime > 0){
+//                                            System.out.println("lollolololol");
+                                    if (now - currentlyUsingWeapon.startTime > (900000000.0 * 2) && currentlyUsingWeapon.squaresTravelled < currentlyUsingWeapon.range){
+                                        System.out.println("range: " + currentlyUsingWeapon.range);
+                                        bullet.fire(colTo, rowTo, buttons, map, this);
+                                        updateScreen();
+                                        bullet.startTime = System.nanoTime();
+                                    } else {
+                                        this.stop();
+                                    }
+                                }
+                            }
+                        }.start();
+                    }
+                }
             }
+            updateScreen();
         }
 
         @Override
@@ -844,109 +1082,6 @@ public class FXMLDocumentController implements Initializable {
                 displayState(ConnectionDisplayState.CONNECTED);
             } else {
                 displayState(ConnectionDisplayState.DISCONNECTED);
-            }
-        }
-    }
-
-    private double startTime;
-    private void inGame(ActionEvent event){
-        EventHandler<MouseEvent> z = new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent event) {
-                //all button code goes here
-                for (int i = 0; i < 5; i++) {
-                    for (int j = 0; j < 4; j++) {
-                        if (((Button) event.getSource()) == buttons[i][j]){
-//                            System.out.println("oc:"+i+"or:"+j);
-                            startTime = System.nanoTime();
-                            new AnimationTimer(){
-                                @Override
-                                public void handle(long now) {
-                                    if(startTime>0){
-                                        if (now - startTime > (900000000.0 * 2)){
-                                            this.stop();
-                                        }
-                                    }
-                                }
-                            }.start();
-                        }
-                    }
-                }
-            }
-        };
-    }
-
-    Button[][] buttons = new Button[50][100];
-
-    Button[][] displayButtons = new Button[26][26];
-
-    Map[][] map = new Map[50][100];
-
-    @FXML
-    private GridPane MAP;
-
-    private void updateScreen(){
-        for (int i = 0; i < map.length; i++) {
-            for (int c = 0; c < map[0].length; c++) {
-                if (map[i][c].newNum == 1){
-                    buttons[i][c].setStyle("-fx-background-color: blue");
-                } else if (map[i][c].newNum == 2){
-                    buttons[i][c].setStyle("-fx-background-color: red");
-                } else if (map[i][c].newNum == 3){
-                    buttons[i][c].setStyle("-fx-background-color: yellow");
-                } else if (map[i][c].newNum == 4){
-                    buttons[i][c].setStyle("-fx-background-color: green");
-                } else if (map[i][c].newNum == 5){
-                    buttons[i][c].setStyle("-fx-background-color: black");
-                } else if (map[i][c].newNum == 6){
-                    buttons[i][c].setStyle("-fx-background-color: grey");
-                } else if (map[i][c].newNum == 7){
-                    buttons[i][c].setStyle("-fx-background-color: brown");
-                }
-            }
-        }
-
-        for (int i = 0; i < 13; i++) {
-            for (int k = 0; k < 13; k++) {
-                if (player.yLoc - (13 - i) > 0 && player.xLoc - (13 - k) > 0){
-                    displayButtons[i][k].setStyle(buttons[player.yLoc - (13 - i)][player.xLoc - (13 - k)].getStyle());
-                    displayButtons[i][k].setGraphic(buttons[player.yLoc - (13 - i)][player.xLoc - (13 - k)].getGraphic());
-                } else {
-                    displayButtons[i][k].setStyle("-fx-background-color: black");
-                }
-            }
-        }
-
-        for (int i = 0; i < 13; i++) {
-            for (int k = 0; k < 13; k++) {
-                if (player.yLoc - (13 - i) > 0 && player.xLoc + k < 99){
-                    displayButtons[i][k + 13].setStyle(buttons[player.yLoc - (13 - i)][player.xLoc + k].getStyle());
-                    displayButtons[i][k + 13].setGraphic(buttons[player.yLoc - (13 - i)][player.xLoc + k].getGraphic());
-                } else {
-                    displayButtons[i][k + 13].setStyle("-fx-background-color: black");
-                }
-            }
-        }
-
-        for (int i = 0; i < 13; i++) {
-            for (int k = 0; k < 13; k++) {
-                if (player.yLoc + i < 49 && player.xLoc + k < 99){
-                    displayButtons[i + 13][k + 13].setStyle(buttons[player.yLoc + i][player.xLoc + k].getStyle());
-                    displayButtons[i + 13][k + 13].setGraphic(buttons[player.yLoc + i][player.xLoc + k].getGraphic());
-                } else {
-                    displayButtons[i + 13][k + 13].setStyle("-fx-background-color: black");
-                }
-            }
-        }
-
-        for (int i = 0; i < 13; i++) {
-            for (int k = 0; k < 13; k++) {
-                if (player.yLoc + i < 49 && player.xLoc - (13 - k) > 0){
-                    displayButtons[i + 13][k].setStyle(buttons[player.yLoc + i][player.xLoc - (13 - k)].getStyle());
-                    displayButtons[i + 13][k].setGraphic(buttons[player.yLoc + i][player.xLoc - (13 - k)].getGraphic());
-                } else {
-                    displayButtons[i + 13][k].setStyle("-fx-background-color: black");
-                }
             }
         }
     }
