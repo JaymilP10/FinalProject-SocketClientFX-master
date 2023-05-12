@@ -75,11 +75,11 @@ class Bullets extends Weapon{
             y += slope[0];
             x -= slope[1];
         } else if (targetY < y && targetX > x){
-            slope = reduceFraction(targetY - y, targetX - x);
+            slope = reduceFraction(y - targetY, targetX - x);
             y -= slope[0];
             x += slope[1];
         } else if (targetY < y && targetX < x){
-            slope = reduceFraction(targetY - y, targetX - x);
+            slope = reduceFraction(y - targetY, targetX - x);
             y -= slope[0];
             x -= slope[1];
         }
