@@ -22,19 +22,23 @@ public class Monsters {
     int xLoc;
     int yLoc;
     int range;
+    double startTime;
+    int respawnTime;
 
     ProgressBar healthBar = new ProgressBar(1);
 
     Weapon primary;
     Weapon secondary;
 
-    public Monsters(int range, int health, int healthIncrease, double speed, int xLoc, int yLoc, Button[][] buttons){
+    public Monsters(int range, int health, int healthIncrease, double speed, int xLoc, int yLoc, Button[][] buttons, int respawnTime){
         this.range = range;
         this.health = health;
         this.maxHealth = health;
         this.healthIncrease = healthIncrease;
         this.xLoc = xLoc;
         this.yLoc = yLoc;
+        this.respawnTime = respawnTime;
+        startTime = System.nanoTime();
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -42,7 +46,7 @@ public class Monsters {
 //                img[i][j].fitWidthProperty().bind(buttons[i + 30][j + 40].widthProperty().subtract(20));
 //                img[i][j].fitHeightProperty().bind(buttons[i + 30][j + 40].heightProperty().subtract(15));
 
-                img[i][j].fitWidthProperty().bind(buttons[i + 30][j + 40].widthProperty());
+//                img[i][j].fitWidthProperty().bind(buttons[i + 30][j + 40].widthProperty());
 //                img[i][j].fitHeightProperty().bind(buttons[i + 30][j + 40].heightProperty());
 //                img[i][j].setFitWidth(50);
 //                img[i][j].setFitHeight(50);
@@ -151,8 +155,9 @@ public class Monsters {
                 img[i][j].setPreserveRatio(true);
 //                img[i][j].setFitHeight(buttons[i + 30][j + 40].getPrefHeight());
 //                img[i][j].setFitWidth(buttons[i + 30][j + 40].getPrefWidth());
-//                img[i][j].setFitHeight(50);
-//                img[i][j].setFitWidth(50);
+                img[i][j].setFitHeight(25);
+                img[i][j].setFitWidth(25);
+                buttons[i + 30][j + 40].setStyle("");
                 buttons[i + 30][j + 40].setGraphic(img[i][j]);
             }
         }

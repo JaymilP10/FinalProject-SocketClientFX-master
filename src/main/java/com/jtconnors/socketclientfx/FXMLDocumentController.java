@@ -61,7 +61,7 @@ public class FXMLDocumentController implements Initializable {
 //    @FXML
 //    private ScrollPane scrollPane;
 
-    private String playerName;
+    private String thisPlayerName;
 
     private final static Logger LOGGER
             = Logger.getLogger(MethodHandles.lookup().lookupClass().getName());
@@ -363,92 +363,133 @@ public class FXMLDocumentController implements Initializable {
             z++;
         }
 
-        dragon = new Monsters(50, 500, 10, .25, 43, 32, buttons);
-//        for (int i = 0; i < buttons.length; i++) {
-//            for (int j = 0; j < buttons[0].length; j++) {
-//                buttons[i][j] = new Button();
-////                        buttons[i][j].setPrefSize(10, 10);
-//                buttons[i][j].setPrefHeight(20);
-//                buttons[i][j].setPrefWidth(20);
-//
-//                map[i][j] = new Map(i, j, 4, false);
-//
-//                if (i > 20 && i < 30 && j < 10){
-//                    map[i][j].num = 1;
-//                } else if (i > 20 && i < 30 && j > 89){
-//                    map[i][j].num = 2;
-//                } else if ((i < 10 && j >= 20 && j <= 79) || (i > 39 && j >= 20 && j <= 79)){
-//                    map[i][j].num = 3;
-//                }
-//                MAP.add(buttons[i][j], j, i);
-//            }
-//        }
-//
-//        for (int i = 10; i <= 39; i++) {
-//            for (int j = 45; j < 55; j++) {
-//                map[i][j].num = 1;
-//            }
-//        }
-//
-//        int x = 10;
-//        for (int i = 30; i <= 39; i++) {
-//            for (int k = 0; k <= 9; k++) {
-////                map[i + k][j] = new Map(i + k, j, 3, false);
-////                map[i - k][j] = new Map(i - k, j, 3, false);
-//                map[i + k][x].num = 3;
-//                map[i - k][x].num = 3;
-//                map[i][x + k].num = 3;
-//                map[i][x - k].num = 3;
-////                map[i + k][j].isWall = false;
-////                map[i - k][j].isWall = false;
-//            }
-//            x++;
-//        }
-//
-//        int j = 89;
-//        for (int i = 20; i >= 10; i--) {
-//            for (int k = 0; k <= 9; k++) {
-////                map[i + k][j] = new Map(i + k, j, 3, false);
-////                map[i - k][j] = new Map(i - k, j, 3, false);
-//                map[i + k][j].num = 3;
-//                map[i - k][j].num = 3;
-//                map[i][j + k].num = 3;
-//                map[i][j - k].num = 3;
-////                map[i + k][j].isWall = false;
-////                map[i - k][j].isWall = false;
-//            }
-//            j--;
-//        }
-//
-//        int y = 89;
-//        for (int i = 30; i <= 39; i++) {
-//            for (int k = 0; k <= 9; k++) {
-////                map[i + k][j] = new Map(i + k, j, 3, false);
-////                map[i - k][j] = new Map(i - k, j, 3, false);
-//                map[i + k][y].num = 3;
-//                map[i - k][y].num = 3;
-//                map[i][y + k].num = 3;
-//                map[i][y - k].num = 3;
-////                map[i + k][j].isWall = false;
-////                map[i - k][j].isWall = false;
-//            }
-//            y--;
-//        }
-//
-//        int z = 10;
-//        for (int i = 20; i >= 10; i--) {
-//            for (int k = 0; k <= 9; k++) {
-////                map[i + k][j] = new Map(i + k, j, 3, false);
-////                map[i - k][j] = new Map(i - k, j, 3, false);
-//                map[i + k][z].num = 3;
-//                map[i - k][z].num = 3;
-//                map[i][z + k].num = 3;
-//                map[i][z - k].num = 3;
-////                map[i + k][j].isWall = false;
-////                map[i - k][j].isWall = false;
-//            }
-//            z++;
-//        }
+        int k = 0;
+        for (int i = 20; i >= 0; i--) {
+            if (k <= 19){
+                map[i][k].Orignum = 5;
+                map[i][k].newNum = 5;
+                map[i - 1][k].Orignum = 5;
+                map[i - 1][k].newNum = 5;
+                k++;
+            }
+        }
+
+        k = 0;
+        for (int i = 30; i <= 49; i++) {
+            if (k <= 18){
+                map[i][k].Orignum = 5;
+                map[i][k].newNum = 5;
+                map[i + 1][k].Orignum = 5;
+                map[i + 1][k].newNum = 5;
+                k++;
+            }
+        }
+
+        k = 99;
+        for (int i = 20; i >= 0; i--) {
+            if (k >= 80){
+                map[i][k].Orignum = 5;
+                map[i][k].newNum = 5;
+                map[i - 1][k].Orignum = 5;
+                map[i - 1][k].newNum = 5;
+                k--;
+            }
+        }
+
+        k = 99;
+        for (int i = 30; i <= 49; i++) {
+            if (k >= 81){
+                map[i][k].Orignum = 5;
+                map[i][k].newNum = 5;
+                map[i + 1][k].Orignum = 5;
+                map[i + 1][k].newNum = 5;
+                k--;
+            }
+        }
+
+        k = 21;
+        for (int i = 19; i >= 10; i--) {
+            if (k <= 33){
+                map[i][k].Orignum = 5;
+                map[i][k].newNum = 5;
+                map[i][k + 1].Orignum = 5;
+                map[i][k + 1].newNum = 5;
+                k++;
+            }
+        }
+
+        k = 21;
+        for (int i = 31; i <= 39; i++) {
+            if (k <= 33){
+                map[i][k].Orignum = 5;
+                map[i][k].newNum = 5;
+                map[i][k - 1].Orignum = 5;
+                map[i][k - 1].newNum = 5;
+                k++;
+            }
+        }
+
+        k = 78;
+        for (int i = 19; i >= 10; i--) {
+            if (k >= 66){
+                map[i][k].Orignum = 5;
+                map[i][k].newNum = 5;
+                map[i][k - 1].Orignum = 5;
+                map[i][k - 1].newNum = 5;
+                k--;
+            }
+        }
+
+        k = 78;
+        for (int i = 31; i <= 39; i++) {
+            if (k >= 66){
+                map[i][k].Orignum = 5;
+                map[i][k].newNum = 5;
+                map[i][k - 1].Orignum = 5;
+                map[i][k - 1].newNum = 5;
+                k--;
+            }
+        }
+
+        for (int i = 31; i < 45; i++) {
+            map[10][i].Orignum = 5;
+            map[10][i].newNum = 5;
+            map[39][i].Orignum = 5;
+            map[39][i].newNum = 5;
+            map[10][i + 34].Orignum = 5;
+            map[10][i + 34].newNum = 5;
+            map[39][i + 34].Orignum = 5;
+            map[39][i + 34].newNum = 5;
+        }
+
+        dragon = new Monsters(50, 500, 10, .25, 43, 32, buttons, 10);
+        monsters.add(dragon);
+        blueBotFrontTurret = new Turrets("blueBotFrontTurret", 5000, 100, 5, map);
+        blueBotMidTurret = new Turrets("blueBotMidTurret", 5000, 100, 5, map);
+        blueBotInhibitorTurret = new Turrets("blueBotInhibitorTurret", 5000, 100, 5, map);
+        blueTopFrontTurret = new Turrets("blueTopFrontTurret", 5000, 100, 5, map);
+        blueTopMidTurret = new Turrets("blueTopMidTurret", 5000, 100, 5, map);
+        blueTopInhibitorTurret = new Turrets("blueTopInhibitorTurret", 5000, 100, 5, map);
+        blueTurrets.add(blueTopFrontTurret);
+        blueTurrets.add(blueTopMidTurret);
+        blueTurrets.add(blueTopInhibitorTurret);
+        blueTurrets.add(blueBotFrontTurret);
+        blueTurrets.add(blueBotMidTurret);
+        blueTurrets.add(blueBotInhibitorTurret);
+
+        redBotFrontTurret = new Turrets("redBotFrontTurret", 5000, 100, 5, map);
+        redBotMidTurret = new Turrets("redBotMidTurret", 5000, 100, 5, map);
+        redBotInhibitorTurret = new Turrets("redBotInhibitorTurret", 5000, 100, 5, map);
+        redTopFrontTurret = new Turrets("redTopFrontTurret", 5000, 100, 5, map);
+        redTopMidTurret = new Turrets("redTopMidTurret", 5000, 100, 5, map);
+        redTopInhibitorTurret = new Turrets("redTopInhibitorTurret", 5000, 100, 5, map);
+        redTurrets.add(redTopFrontTurret);
+        redTurrets.add(redTopMidTurret);
+        redTurrets.add(redTopInhibitorTurret);
+        redTurrets.add(redBotFrontTurret);
+        redTurrets.add(redBotMidTurret);
+        redTurrets.add(redBotInhibitorTurret);
+
         Weapon LMG = new Weapon("LMG", "MachineGun", 25, 10, 100, .1);
         Weapon RPG = new Weapon("RPG", "Rocket Launcher", 100, 400, 5, .25);
         Weapon AR = new Weapon("AR", "Assault Rifle", 40, 50, 30, .25);
@@ -468,17 +509,100 @@ public class FXMLDocumentController implements Initializable {
         System.out.println("called start");
         new AnimationTimer(){
             @Override
-            public void handle(long now) {
+            public void handle(long noww) {
                 if(startTime>0){
-                    if (now - startTime > (900000000.0 * .1)) {
-//                        System.out.println("ANIMATION TIMER IS WORKING");
-                        if (frame < 9) {
-                            frame++;
-                        } else if (frame == 9) {
-                            frame = 1;
+                    for (Turrets turret : redTurrets) {
+//                        System.out.println(turret.name);
+//                        System.out.println("1y:" + player.yLoc);
+//                        System.out.println("1x:" + player.xLoc);
+                        if (Math.abs(turret.turretX - player.xLoc) <= turret.range && Math.abs(turret.turretY - player.yLoc) <= turret.range && !turret.targetHit){
+                            System.out.println("2y:" + player.yLoc);
+                            System.out.println("2x:" + player.xLoc);
+                            System.out.println("x:");
+                            System.out.println(turret.turretX - player.xLoc);
+                            System.out.println("y:");
+                            System.out.println(turret.turretY - player.yLoc);
+//                            System.out.println("trueeeeeeeeeeeeeeee");
+//                        if ((turret.turretX > player.xLoc && turret.turretY > player.yLoc && turret.turretX - player.xLoc <= turret.range && turret.turretY - player.yLoc <= turret.range && !turret.targetHit) || (turret.turretX < player.xLoc && turret.turretY < player.yLoc && player.xLoc - turret.turretX <= turret.range && turret.turretY - player.yLoc <= turret.range && !turret.targetHit)){
+//                            System.out.println("yuh");
+//                                System.out.println("lol");
+                            new AnimationTimer(){
+                                @Override
+                                public void handle(long now) {
+//                                        System.out.println(turret.name);
+                                    if (now - turret.startTime > (900000000.0 * .3)) {
+//                                            System.out.println("ANIMATION TIMER IS WORKING");
+                                        if (Math.abs(turret.turretX - player.xLoc) <= turret.range && Math.abs(turret.turretY - player.yLoc) <= turret.range && !turret.targetHit){
+//                                                turret.shoot(player, map, this);
+                                            turret.isShooting = true;
+//                                                updateScreen();
+//                                                if (turret.targetHit){
+////                                                System.out.println("TARGET HIT");
+//                                                    turret.x = turret.turretX;
+//                                                    turret.y = turret.turretY;
+//                                                    turret.targetHit = false;
+//                                                    turret.isShooting = false;
+////                                                if (Math.abs(turret.turretX - player.xLoc) <= turret.range && Math.abs(turret.turretY - player.yLoc) <= turret.range && !turret.targetHit){
+////
+////                                                } else {
+////                                                    System.out.println("stop");
+////                                                    this.stop();
+////                                                }
+//                                                }
+                                        }
+//                                            } else if (!turret.isShooting){
+//                                                this.stop();
+//                                            }
+
+                                        if (turret.isShooting){
+                                            if (now - turret.startTime > (900000000.0 * .3)) {
+                                                turret.shoot(player, map, this);
+                                                updateScreen();
+                                                if (turret.targetHit){
+//                                                System.out.println("TARGET HIT");
+                                                    turret.x = turret.turretX;
+                                                    turret.y = turret.turretY;
+                                                    turret.targetHit = false;
+                                                    turret.isShooting = false;
+                                                    this.stop();
+//                                                if (Math.abs(turret.turretX - player.xLoc) <= turret.range && Math.abs(turret.turretY - player.yLoc) <= turret.range && !turret.targetHit){
+//
+//                                                } else {
+//                                                    System.out.println("stop");
+//                                                    this.stop();
+//                                                }
+                                                }
+                                            }
+                                        }
+
+
+                                        turret.startTime = System.nanoTime();
+                                    }
+                                }
+                            }.start();
                         }
-                        dragon.changeImage(buttons, frame);
-                        startTime = System.nanoTime();
+                    }
+                    for (Monsters monster : monsters) {
+                        if (noww - startTime > (900000000.0 * monster.respawnTime)) {
+//                        if (now - startTime > (900000000.0 * .1)) {
+                            new AnimationTimer(){
+                                @Override
+                                public void handle(long now){
+//                                   System.out.println("ANIMATION TIMER IS WORKING");
+                                    if (now - monster.startTime > (900000000.0 * .1)){
+//                                    System.out.println("inside second animation tmer");
+                                        if (frame < 9) {
+                                            frame++;
+                                        } else if (frame == 9) {
+                                            frame = 1;
+                                        }
+                                        dragon.changeImage(buttons, frame);
+                                        monster.startTime = System.nanoTime();
+                                    }
+//                                    startTime = System.nanoTime();
+                                }
+                            }.start();
+                        }
                     }
                 }
             }
@@ -497,14 +621,13 @@ public class FXMLDocumentController implements Initializable {
                     for (int i = 0; i < 26; i++) {
                         for (int j = 0; j < 26; j++) {
                             if (((Button) event.getSource()) == displayButtons[i][j]){
-
 //                                int rowTo = player.yLoc + (i - (player.yLoc + 13));
 //                                int colTo = player.xLoc + (j - (player.xLoc + 13));
 
                                 int rowTo = player.yLoc + (i - 13);
                                 int colTo = player.xLoc + (j - 13);
 
-                                socket.sendMessage("Player shot:" + playerName + "r:" + rowTo + "c:" + colTo);
+                                socket.sendMessage("Player shot:" + thisPlayerName + "r:" + rowTo + "c:" + colTo);
 
 //                                int finalJ = j;
 //                                int finalI = i;
@@ -516,7 +639,7 @@ public class FXMLDocumentController implements Initializable {
 //                                            System.out.println("lollolololol");
                                             if (now - currentlyUsingWeapon.startTime > (900000000.0 * 2) && currentlyUsingWeapon.squaresTravelled < currentlyUsingWeapon.range){
                                                 System.out.println("range: " + currentlyUsingWeapon.range);
-                                                bullet.fire(colTo, rowTo, buttons, map, this);
+                                                bullet.fire(colTo, rowTo, map, this, currentlyUsingWeapon);
                                                 updateScreen();
                                                 bullet.startTime = System.nanoTime();
                                             } else {
@@ -542,42 +665,141 @@ public class FXMLDocumentController implements Initializable {
                 displayButtons[i][j].setOnMouseClicked(z);
             }
         }
-//            EventHandler<MouseEvent> z = new EventHandler<MouseEvent>() {
-//                @Override
-//                public void handle(MouseEvent event) {
-//                    //all button code goes here
-//                    for (int i = 0; i < 50; i++) {
-//                        for (int j = 0; j < 100; j++) {
-//                            if (((Button) event.getSource()) == buttons[i][j]){
-////                                System.out.println("oc:"+i+"or:"+j);
-//                                player.changeLoc(map, i, j);
-//                                socketServer.postUpdate("PlayerMoved:" + playerName + "i:" + i + "j:" + j);
-//                                startTime = System.nanoTime();
-//                                System.out.println(startTime);
-//                                System.out.println("end");
+    }
+
+//    public void start(){
+//        updateScreen();
+//        System.out.println("called start");
+//        new AnimationTimer(){
+//            @Override
+//            public void handle(long now) {
+//                if(startTime>0){
+//                    if (now - startTime > (900000000.0 * .1)) {
+////                        System.out.println("ANIMATION TIMER IS WORKING");
+//                        if (frame < 9) {
+//                            frame++;
+//                        } else if (frame == 9) {
+//                            frame = 1;
+//                        }
+//                        dragon.changeImage(buttons, frame);
+//                        startTime = System.nanoTime();
+//                    }
+//                }
+//            }
+//        }.start();
+//
+//        System.out.println("here");
+//
+//        EventHandler<MouseEvent> z = new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent event) {
+//                System.out.println("clicked something");
+//                if (event.getButton() == MouseButton.PRIMARY){
+//                    System.out.println("clicked primary");
+//                    Bullets bullet = new Bullets(player.xLoc, player.yLoc);
+//                    currentlyUsingWeapon.squaresTravelled = 0;
+//                    for (int i = 0; i < 26; i++) {
+//                        for (int j = 0; j < 26; j++) {
+//                            if (((Button) event.getSource()) == displayButtons[i][j]){
+//
+////                                int rowTo = player.yLoc + (i - (player.yLoc + 13));
+////                                int colTo = player.xLoc + (j - (player.xLoc + 13));
+//
+//                                int rowTo = player.yLoc + (i - 13);
+//                                int colTo = player.xLoc + (j - 13);
+//
+//                                socket.sendMessage("Player shot:" + thisPlayerName + "r:" + rowTo + "c:" + colTo);
+//
+////                                int finalJ = j;
+////                                int finalI = i;
+//                                new AnimationTimer(){
+//                                    @Override
+//                                    public void handle(long now) {
+////                                        System.out.println("in animation timer");
+//                                        if (currentlyUsingWeapon.startTime > 0){
+////                                            System.out.println("lollolololol");
+//                                            if (now - currentlyUsingWeapon.startTime > (900000000.0 * 2) && currentlyUsingWeapon.squaresTravelled < currentlyUsingWeapon.range){
+//                                                System.out.println("range: " + currentlyUsingWeapon.range);
+//                                                bullet.fire(colTo, rowTo, map, this);
+//                                                updateScreen();
+//                                                bullet.startTime = System.nanoTime();
+//                                            } else {
+//                                                this.stop();
+//                                            }
+//                                        }
+//                                    }
+//                                }.start();
+//                                System.out.println(i + " " + j);
+////                            System.out.println("oc:"+i+"or:"+j);
+//
 //                            }
 //                        }
 //                    }
-//                }
-//            };
-//            for (int i = 0; i < 5; i++) {
-//                for (int j = 0; j < 4; j++) {
-////                btn[i][j].setOnMouseClicked(z);
-//                    buttons[i][j].setOnMouseClicked(z);
+//                } else if (event.getButton() == MouseButton.SECONDARY){
+//                    System.out.println("clicked secondary");
 //                }
 //            }
-
-
-
-    }
+//        };
+//        for (int i = 0; i < 26; i++) {
+//            for (int j = 0; j < 26; j++) {
+////                btn[i][j].setOnMouseClicked(z);
+//                displayButtons[i][j].setOnMouseClicked(z);
+//            }
+//        }
+////            EventHandler<MouseEvent> z = new EventHandler<MouseEvent>() {
+////                @Override
+////                public void handle(MouseEvent event) {
+////                    //all button code goes here
+////                    for (int i = 0; i < 50; i++) {
+////                        for (int j = 0; j < 100; j++) {
+////                            if (((Button) event.getSource()) == buttons[i][j]){
+//////                                System.out.println("oc:"+i+"or:"+j);
+////                                player.changeLoc(map, i, j);
+////                                socketServer.postUpdate("PlayerMoved:" + playerName + "i:" + i + "j:" + j);
+////                                startTime = System.nanoTime();
+////                                System.out.println(startTime);
+////                                System.out.println("end");
+////                            }
+////                        }
+////                    }
+////                }
+////            };
+////            for (int i = 0; i < 5; i++) {
+////                for (int j = 0; j < 4; j++) {
+//////                btn[i][j].setOnMouseClicked(z);
+////                    buttons[i][j].setOnMouseClicked(z);
+////                }
+////            }
+//
+//
+//
+//    }
 
     ArrayList<Weapon> weapons = new ArrayList<>();
     Weapon primaryWeapon = new Weapon();
     Weapon secondaryWeapon = new Weapon();
     Weapon currentlyUsingWeapon = new Weapon();
+
+    ArrayList<Turrets> blueTurrets = new ArrayList<>();
+    Turrets blueTopFrontTurret;
+    Turrets blueTopMidTurret;
+    Turrets blueTopInhibitorTurret;
+    Turrets blueBotFrontTurret;
+    Turrets blueBotMidTurret;
+    Turrets blueBotInhibitorTurret;
+
+    ArrayList<Turrets> redTurrets = new ArrayList<>();
+    Turrets redTopFrontTurret;
+    Turrets redTopMidTurret;
+    Turrets redTopInhibitorTurret;
+    Turrets redBotFrontTurret;
+    Turrets redBotMidTurret;
+    Turrets redBotInhibitorTurret;
+
     int numPlayersReady = 0;
 
     ArrayList<Player> players = new ArrayList<>();
+    ArrayList<Monsters> monsters = new ArrayList<>();
 
     Monsters dragon;
 
@@ -618,14 +840,14 @@ public class FXMLDocumentController implements Initializable {
         btnReady.setDisable(true);
         btnReady.setVisible(false);
         numPlayersReady++;
-        player = new Player(playerName, 1, 250, 25, .5, 5, 23, map);
+        player = new Player(thisPlayerName, 1, 250, 25, .5, 5, 23, map);
         player.primary = primaryWeapon;
         player.secondary = secondaryWeapon;
         updateScreen();
         players.add(player);
 //        socketServer.postUpdate("Create Player:" + playerName);
         socket.sendMessage("Ready");
-        if (numPlayersReady == 2){
+        if (numPlayersReady == 3){
             lstPrimaryWeapon.setVisible(false);
             lstSecondaryWeapon.setVisible(false);
             lstItems.setVisible(false);
@@ -639,81 +861,80 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void enterName() {
-        playerName = txtName.getText();
+        thisPlayerName = txtName.getText();
 //        socket.sendMessage("Client1Name" + playerName);
         btnFindMatch.setDisable(false);
     }
 
     @FXML
     private void move(KeyEvent keyEvent){
-        System.out.println("works");
+//        System.out.println("works");
         KeyCode key = keyEvent.getCode();
-        System.out.println("Key Pressed: " + key);
-        if (keyEvent.getCode().equals(KeyCode.D) && player.xLoc < 99) {  // left arrow key
+//        System.out.println("Key Pressed: " + key);
+//        if (keyEvent.getCode().equals(KeyCode.D) || keyEvent.getCode().equals(KeyCode.A) || keyEvent.getCode().equals(KeyCode.W) || key  == KeyCode.S || key == KeyCode.Q)
+        if (keyEvent.getCode().equals(KeyCode.D) && player.xLoc < 99 && (map[player.yLoc][player.xLoc + 1].Orignum != 5 && map[player.yLoc - 1][player.xLoc + 1].newNum != 5 && map[player.yLoc - 1][player.xLoc].Orignum != 5 && map[player.yLoc][player.xLoc].Orignum != 5)) {  // left arrow key
             map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
-            socket.sendMessage("Move Player Right:" + playerName);
             player.xLoc++;
-        }
-        else if (keyEvent.getCode().equals(KeyCode.A) && player.xLoc > 0 && player.xLoc - 1 > 1) {
+            socket.sendMessage("Move Player Right:" + thisPlayerName);
+        } else if (keyEvent.getCode().equals(KeyCode.A) && player.xLoc > 0 && player.xLoc - 1 > 1 && (map[player.yLoc][player.xLoc - 1].Orignum != 5 && map[player.yLoc - 1][player.xLoc - 1].newNum != 5 && map[player.yLoc - 1][player.xLoc - 2].Orignum != 5 && map[player.yLoc][player.xLoc - 2].Orignum != 5)) {
             map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
-            socket.sendMessage("Move Player Left:" + playerName);
-            System.out.println("rk");
+//            System.out.println("rk");
             player.xLoc--;
-        }
-        else if (keyEvent.getCode().equals(KeyCode.W) && player.yLoc > 0 && player.yLoc - 1 > 1) {
+            socket.sendMessage("Move Player Left:" + thisPlayerName);
+        } else if (keyEvent.getCode().equals(KeyCode.W) && player.yLoc > 0 && player.yLoc - 1 > 1 && (map[player.yLoc - 1][player.xLoc].Orignum != 5 && map[player.yLoc - 1][player.xLoc - 1].newNum != 5 && map[player.yLoc - 2][player.xLoc].Orignum != 5 && map[player.yLoc - 2][player.xLoc - 1].Orignum != 5)) {
             map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
-            System.out.println("w");
-            socket.sendMessage("Move Player Upp:" + playerName);
+//            System.out.println("w");
             player.yLoc--;
+            socket.sendMessage("Move Player Upp:" + thisPlayerName);
         }
-        else if (key == KeyCode.S && player.yLoc < 49) {
+        else if (key == KeyCode.S && player.yLoc < 49 && (map[player.yLoc + 1][player.xLoc].Orignum != 5 && map[player.yLoc + 1][player.xLoc - 1].newNum != 5 && map[player.yLoc][player.xLoc].Orignum != 5 && map[player.yLoc][player.xLoc - 1].Orignum != 5)) {
             map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
-            socket.sendMessage("Move Player Downn:" + playerName);
             player.yLoc++;
-        } else if (key == KeyCode.Q && player.yLoc > 0 && player.xLoc > 0 && player.yLoc - 1 > 1 && player.xLoc - 1 > 1){
+            socket.sendMessage("Move Player Downn:" + thisPlayerName);
+        } else if (key == KeyCode.Q && player.yLoc > 0 && player.xLoc > 0 && player.yLoc - 1 > 1 && player.xLoc - 1 > 1 && (map[player.yLoc - 1][player.xLoc - 1].Orignum != 5 && map[player.yLoc - 2][player.xLoc - 1].newNum != 5 && map[player.yLoc - 1][player.xLoc - 2].Orignum != 5 && map[player.yLoc - 2][player.xLoc - 2].Orignum != 5)){
             map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
-            socket.sendMessage("Move Player Up-left:" + playerName);
             player.yLoc--;
             player.xLoc--;
-        } else if (key == KeyCode.E && player.yLoc > 0 && player.xLoc < 99 && player.yLoc - 1 > 1){
+            socket.sendMessage("Move Player Up-left:" + thisPlayerName);
+        } else if (key == KeyCode.E && player.yLoc > 0 && player.xLoc < 99 && player.yLoc - 1 > 1 && (map[player.yLoc - 1][player.xLoc + 1].Orignum != 5 && map[player.yLoc - 1][player.xLoc + 2].newNum != 5 && map[player.yLoc - 2][player.xLoc + 1].Orignum != 5 && map[player.yLoc - 2][player.xLoc + 2].Orignum != 5)){
             map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
-            socket.sendMessage("Move Player Up-right:" + playerName);
             player.yLoc--;
             player.xLoc++;
-        } else if (key == KeyCode.Z && player.yLoc < 99 && player.xLoc > 0 && player.xLoc - 1 > 1){
+            socket.sendMessage("Move Player Up-right:" + thisPlayerName);
+        } else if (key == KeyCode.Z && player.yLoc < 99 && player.xLoc > 0 && player.xLoc - 1 > 1 && (map[player.yLoc + 1][player.xLoc - 1].Orignum != 5 && map[player.yLoc + 1][player.xLoc - 2].newNum != 5 && map[player.yLoc + 2][player.xLoc - 1].Orignum != 5 && map[player.yLoc + 2][player.xLoc - 2].Orignum != 5)){
             map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
-            socket.sendMessage("Move Player Down-left:" + playerName);
             player.yLoc++;
             player.xLoc--;
-        } else if (key == KeyCode.C && player.yLoc < 49 && player.xLoc < 99){
+            socket.sendMessage("Move Player Down-left:" + thisPlayerName);
+        } else if (key == KeyCode.C && player.yLoc < 49 && player.xLoc < 99 && (map[player.yLoc + 1][player.xLoc + 1].Orignum != 5 && map[player.yLoc + 1][player.xLoc + 2].newNum != 5 && map[player.yLoc + 2][player.xLoc + 1].Orignum != 5 && map[player.yLoc + 2][player.xLoc + 2].Orignum != 5)){
             map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
             map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
             map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
             map[player.yLoc][player.xLoc].newNum = map[player.yLoc][player.xLoc].Orignum;
-            socket.sendMessage("Move Player Down-right:" + playerName);
             player.yLoc++;
             player.xLoc++;
+            socket.sendMessage("Move Player Down-right:" + thisPlayerName);
         }
         map[player.yLoc - 1][player.xLoc - 1].newNum = 6;
         map[player.yLoc - 1][player.xLoc].newNum = 6;
@@ -762,11 +983,36 @@ public class FXMLDocumentController implements Initializable {
     private void updateScreen(){
 
         for (Player player : players) {
-            System.out.println(player.name);
             map[player.yLoc][player.xLoc].newNum = 6;
             map[player.yLoc - 1][player.xLoc - 1].newNum = 6;
             map[player.yLoc - 1][player.xLoc].newNum = 6;
             map[player.yLoc][player.xLoc - 1].newNum = 6;
+        }
+
+        for (Turrets turret : blueTurrets) {
+            if (!turret.isDestroyed){
+                map[turret.turretY][turret.turretX].newNum = 1;
+                map[turret.turretY - 1][turret.turretX - 1].newNum = 1;
+                map[turret.turretY - 1][turret.turretX].newNum = 1;
+                map[turret.turretY - 1][turret.turretX + 1].newNum = 1;
+                map[turret.turretY + 1][turret.turretX - 1].newNum = 1;
+                map[turret.turretY + 1][turret.turretX].newNum = 1;
+                map[turret.turretY + 1][turret.turretX + 1].newNum = 1;
+                map[turret.turretY][turret.turretX - 1].newNum = 1;
+                map[turret.turretY][turret.turretX + 1].newNum = 1;
+            }
+        }
+
+        for (Turrets turret : redTurrets) {
+            map[turret.turretY][turret.turretX].newNum = 2;
+            map[turret.turretY - 1][turret.turretX - 1].newNum = 2;
+            map[turret.turretY - 1][turret.turretX].newNum = 2;
+            map[turret.turretY - 1][turret.turretX + 1].newNum = 2;
+            map[turret.turretY + 1][turret.turretX - 1].newNum = 2;
+            map[turret.turretY + 1][turret.turretX].newNum = 2;
+            map[turret.turretY + 1][turret.turretX + 1].newNum = 2;
+            map[turret.turretY][turret.turretX - 1].newNum = 2;
+            map[turret.turretY][turret.turretX + 1].newNum = 2;
         }
 
         for (int i = 0; i < map.length; i++) {
@@ -782,9 +1028,11 @@ public class FXMLDocumentController implements Initializable {
                 } else if (map[i][c].newNum == 5){
                     buttons[i][c].setStyle("-fx-background-color: black");
                 } else if (map[i][c].newNum == 6){
-                    buttons[i][c].setStyle("-fx-background-color: grey");
+                    buttons[i][c].setStyle("-fx-background-color: lightblue");
                 } else if (map[i][c].newNum == 7){
                     buttons[i][c].setStyle("-fx-background-color: brown");
+                } else if (map[i][c].newNum == 8){
+                    buttons[i][c].setStyle("-fx-background-color: grey");
                 }
             }
         }
@@ -858,7 +1106,7 @@ public class FXMLDocumentController implements Initializable {
                 updateScreen();
             } else if (line.startsWith("NumConnections")){
                 int numConnections = Integer.parseInt(line.substring(line.indexOf("s") + 1));
-                if (numConnections == 2){
+                if (numConnections == 3){
                     txtName.setVisible(true);
                     btnFindMatch.setDisable(true);
                     btnEnterName.setDisable(true);
@@ -874,7 +1122,7 @@ public class FXMLDocumentController implements Initializable {
                 }
             } else if (line.startsWith("Ready")){
                 numPlayersReady = Integer.parseInt(line.substring(line.indexOf("y") + 1));
-                if (numPlayersReady == 2){
+                if (numPlayersReady == 3){
                     lstPrimaryWeapon.setVisible(false);
                     lstSecondaryWeapon.setVisible(false);
                     lstItems.setVisible(false);
@@ -886,10 +1134,12 @@ public class FXMLDocumentController implements Initializable {
                     start();
                 }
             } else if (line.startsWith("Create Player:")){
-                players.add(new Player(line.substring(line.indexOf(":") + 1), 1, 250, 25, .5, 5, 23, map));
+                if (!line.substring(line.indexOf(":") + 1).equals(thisPlayerName)){
+                    players.add(new Player(line.substring(line.indexOf(":") + 1), 1, 250, 25, .5, 5, 23, map));
+                }
             } else if (line.startsWith("Move Player Left:")){
                 for (Player player : players) {
-                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1)) && !player.name.equals(thisPlayerName)){
                         map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
                         map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
                         map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
@@ -900,7 +1150,7 @@ public class FXMLDocumentController implements Initializable {
             } else if (line.startsWith("Move Player Right:")){
                 System.out.println("received player move right");
                 for (Player player : players) {
-                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1)) && !player.name.equals(thisPlayerName)){
                         map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
                         map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
                         map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
@@ -910,7 +1160,7 @@ public class FXMLDocumentController implements Initializable {
                 }
             } else if (line.startsWith("Move Player Downn")){
                 for (Player player : players) {
-                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1)) && !player.name.equals(thisPlayerName)){
                         map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
                         map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
                         map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
@@ -920,7 +1170,7 @@ public class FXMLDocumentController implements Initializable {
                 }
             } else if (line.startsWith("Move Player Upp")){
                 for (Player player : players) {
-                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1)) && !player.name.equals(thisPlayerName)){
                         map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
                         map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
                         map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
@@ -930,7 +1180,7 @@ public class FXMLDocumentController implements Initializable {
                 }
             } else if (line.startsWith("Move Player Down-right")){
                 for (Player player : players) {
-                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1)) && !player.name.equals(thisPlayerName)){
                         map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
                         map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
                         map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
@@ -941,7 +1191,7 @@ public class FXMLDocumentController implements Initializable {
                 }
             } else if (line.startsWith("Move Player Down-left")){
                 for (Player player : players) {
-                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1)) && !player.name.equals(thisPlayerName)){
                         map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
                         map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
                         map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
@@ -952,7 +1202,7 @@ public class FXMLDocumentController implements Initializable {
                 }
             } else if (line.startsWith("Move Player Up-right")){
                 for (Player player : players) {
-                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1)) && !player.name.equals(thisPlayerName)){
                         map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
                         map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
                         map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
@@ -963,7 +1213,7 @@ public class FXMLDocumentController implements Initializable {
                 }
             } else if (line.startsWith("Move Player Up-left")){
                 for (Player player : players) {
-                    if (player.name.equals(line.substring(line.indexOf(":") + 1))){
+                    if (player.name.equals(line.substring(line.indexOf(":") + 1)) && !player.name.equals(thisPlayerName)){
                         map[player.yLoc - 1][player.xLoc - 1].newNum = map[player.yLoc - 1][player.xLoc - 1].Orignum;
                         map[player.yLoc - 1][player.xLoc].newNum = map[player.yLoc - 1][player.xLoc].Orignum;
                         map[player.yLoc][player.xLoc - 1].newNum = map[player.yLoc][player.xLoc - 1].Orignum;
@@ -978,7 +1228,7 @@ public class FXMLDocumentController implements Initializable {
                 String playerName = line.substring(line.indexOf("shot:") + 5, line.indexOf("r:"));
 
                 for (Player player : players) {
-                    if (player.name.equals(playerName)){
+                    if (player.name.equals(playerName) && !player.name.equals(thisPlayerName)){
                         Bullets bullet = new Bullets(player.xLoc, player.yLoc);
                         new AnimationTimer(){
                             @Override
@@ -988,7 +1238,7 @@ public class FXMLDocumentController implements Initializable {
 //                                            System.out.println("lollolololol");
                                     if (now - currentlyUsingWeapon.startTime > (900000000.0 * 2) && currentlyUsingWeapon.squaresTravelled < currentlyUsingWeapon.range){
                                         System.out.println("range: " + currentlyUsingWeapon.range);
-                                        bullet.fire(colTo, rowTo, buttons, map, this);
+                                        bullet.fire(colTo, rowTo, map, this, currentlyUsingWeapon);
                                         updateScreen();
                                         bullet.startTime = System.nanoTime();
                                     } else {

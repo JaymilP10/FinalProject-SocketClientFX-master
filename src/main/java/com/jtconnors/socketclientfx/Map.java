@@ -21,5 +21,4 @@ public class Map {
     public void changeNum(int num){
         this.newNum = num;
     }
-
 }

@@ -45,7 +45,7 @@ class Bullets extends Weapon{
         this.x = x;
         this.y = y;
     }
-    public void fire(int targetX, int targetY, Button[][] buttons, Map[][] map, AnimationTimer animationTimer){
+    public void fire(int targetX, int targetY, Map[][] map, AnimationTimer animationTimer, Weapon weapon){
         if (y > 0 && y < 50 && x > 0 && x < 100)
             map[y][x].newNum = map[y][x].Orignum;
         System.out.println("called fire");
@@ -71,7 +71,7 @@ class Bullets extends Weapon{
             y += slope[0];
             x += slope[1];
         } else if (targetY > y && targetX < x){
-            slope = reduceFraction(targetY - y, targetX - x);
+            slope = reduceFraction(targetY - y, x - targetX);
             y += slope[0];
             x -= slope[1];
         } else if (targetY < y && targetX > x){
@@ -79,7 +79,7 @@ class Bullets extends Weapon{
             y -= slope[0];
             x += slope[1];
         } else if (targetY < y && targetX < x){
-            slope = reduceFraction(y - targetY, targetX - x);
+            slope = reduceFraction(y - targetY, x - targetX);
             y -= slope[0];
             x -= slope[1];
         }
@@ -150,7 +150,7 @@ class Bullets extends Weapon{
             return result;
         }
         result[0] = numerator/gcd;
-        result[1] = numerator/gcd;
+        result[1] = denominator/gcd;
         return result;
     }
 
@@ -187,3 +187,4 @@ class Bullets extends Weapon{
 //        return r;
     }
 }
+
