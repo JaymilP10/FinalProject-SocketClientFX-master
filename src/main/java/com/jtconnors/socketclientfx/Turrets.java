@@ -178,4 +178,3 @@ public class Turrets {
         return Integer.parseInt(String.valueOf(n.gcd(d)));
     }
 }
-
